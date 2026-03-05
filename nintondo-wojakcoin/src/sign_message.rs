@@ -224,7 +224,7 @@ mod tests {
         let hash = signed_msg_hash("test");
         assert_eq!(
             hash.to_string(),
-            "a6f87fe6d58a032c320ff8d1541656f0282c2c7bfcc69d61af4c8e8ed528e49c"
+            "19bc338528e604b42719ffc931e6faf22a7d81ad06d42626a145ee944754cd3d"
         );
     }
 

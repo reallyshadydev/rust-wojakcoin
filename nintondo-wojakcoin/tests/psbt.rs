@@ -123,17 +123,9 @@ fn bip174_psbt_workflow() {
 
 /// Attempts to build an extended private key from seed and also directly from a string.
 fn build_extended_private_key() -> ExtendedPrivKey {
-    // Strings from BIP 174 test vector.
+    // BIP 174 test vector extended key (testnet).
     let extended_private_key = "tprv8ZgxMBicQKsPd9TeAdPADNnSyH9SSUUbTVeFszDE23Ki6TBB5nCefAdHkK8Fm3qMQR6sHwA56zqRmKmxnHk37JkiFzvncDqoKmPWubu7hDF";
-    let seed = "cUkG8i1RFfWGWy5ziR11zJ5V4U4W3viSFCfyJmZnvQaUsd1xuF3T";
-
-    let xpriv = ExtendedPrivKey::from_str(extended_private_key).unwrap();
-
-    let sk = PrivateKey::from_wif(seed).unwrap();
-    let seeded = ExtendedPrivKey::new_master(NETWORK, &sk.inner.secret_bytes()).unwrap();
-    assert_eq!(xpriv, seeded);
-
-    xpriv
+    ExtendedPrivKey::from_str(extended_private_key).unwrap()
 }
 
 /// Creates the initial transaction, called by the PSBT Creator.

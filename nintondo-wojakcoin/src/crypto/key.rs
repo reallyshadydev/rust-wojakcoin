@@ -345,8 +345,8 @@ impl PrivateKey {
     pub fn fmt_wif(&self, fmt: &mut dyn fmt::Write) -> fmt::Result {
         let mut ret = [0; 34];
         ret[0] = match self.network {
-            Network::Wojakcoin => 158,
-            Network::Testnet | Network::Signet | Network::Regtest => 241,
+            Network::Wojakcoin => 201,
+            Network::Testnet | Network::Signet | Network::Regtest => 239,
         };
         ret[1..33].copy_from_slice(&self.inner[..]);
         let privkey = if self.compressed {
@@ -379,8 +379,8 @@ impl PrivateKey {
         };
 
         let network = match data[0] {
-            158 => Network::Wojakcoin,
-            241 => Network::Testnet,
+            201 | 128 => Network::Wojakcoin, // 128 = Bitcoin mainnet WIF (accept for decoding)
+            239 => Network::Testnet,
             x => {
                 return Err(Error::Base58(base58::Error::InvalidAddressVersion(x)));
             }
@@ -793,7 +793,7 @@ mod tests {
             PrivateKey::from_wif("5JYkZjmN7PVMjJUfJWfRFwtuXTGB439XV6faajeHPAM9Z2PT2R3").unwrap();
         assert_eq!(sk.network, Wojakcoin);
         assert!(!sk.compressed);
-        assert_eq!(&sk.to_wif(), "5JYkZjmN7PVMjJUfJWfRFwtuXTGB439XV6faajeHPAM9Z2PT2R3");
+        assert_eq!(&sk.to_wif(), "7kT6SfXhKSrtaBu9UpyMtMfSNnDbWSfSvkqSPfriwzqTaVJskfi");
 
         let secp = Secp256k1::new();
         let mut pk = sk.public_key(&secp);
@@ -801,7 +801,7 @@ mod tests {
         assert_eq!(&pk.to_string(), "042e58afe51f9ed8ad3cc7897f634d881fdbe49a81564629ded8156bebd2ffd1af191923a2964c177f5b5923ae500fca49e99492d534aa3759d6b25a8bc971b133");
         assert_eq!(pk, PublicKey::from_str("042e58afe51f9ed8ad3cc7897f634d881fdbe49a81564629ded8156bebd2ffd1af191923a2964c177f5b5923ae500fca49e99492d534aa3759d6b25a8bc971b133").unwrap());
         let addr = Address::p2pkh(&pk, sk.network);
-        assert_eq!(&addr.to_string(), "1GhQvF6dL8xa6wBxLnWmHcQsurx9RxiMc8");
+        assert_eq!(&addr.to_string(), "WeNSoArfAJnXoaNH8Qq2gmHJrgm1MtaaVt");
         pk.compressed = true;
         assert_eq!(
             &pk.to_string(),

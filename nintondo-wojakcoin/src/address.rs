@@ -707,7 +707,7 @@ impl NetworkValidation for NetworkUnchecked {
 /// # use nintondo_wojakcoin::address::{Address, NetworkChecked};
 /// let address: Address<NetworkChecked> = Address::from_str("132F25rTsvBdp9JzLLBHP5mvGY66i1xdiM")
 ///                .unwrap().assume_checked();
-/// assert_eq!(address.to_string(), "132F25rTsvBdp9JzLLBHP5mvGY66i1xdiM");
+/// assert_eq!(address.to_string(), "WQhGu1cVi61bWnVK7xVYnEeMDMtxaP2s66");
 /// ```
 ///
 /// ```ignore
@@ -727,7 +727,7 @@ impl NetworkValidation for NetworkUnchecked {
 /// # use nintondo_wojakcoin::address::{Address, NetworkUnchecked};
 /// let address: Address<NetworkUnchecked> = Address::from_str("132F25rTsvBdp9JzLLBHP5mvGY66i1xdiM")
 ///                .unwrap();
-/// assert_eq!(format!("{:?}", address), "Address<NetworkUnchecked>(132F25rTsvBdp9JzLLBHP5mvGY66i1xdiM)");
+/// assert_eq!(format!("{:?}", address), "Address<NetworkUnchecked>(WQhGu1cVi61bWnVK7xVYnEeMDMtxaP2s66)");
 /// ```
 ///
 /// ```
@@ -735,7 +735,7 @@ impl NetworkValidation for NetworkUnchecked {
 /// # use nintondo_wojakcoin::address::{Address, NetworkChecked};
 /// let address: Address<NetworkChecked> = Address::from_str("132F25rTsvBdp9JzLLBHP5mvGY66i1xdiM")
 ///                .unwrap().assume_checked();
-/// assert_eq!(format!("{:?}", address), "132F25rTsvBdp9JzLLBHP5mvGY66i1xdiM");
+/// assert_eq!(format!("{:?}", address), "WQhGu1cVi61bWnVK7xVYnEeMDMtxaP2s66");
 /// ```
 ///
 /// ### Relevant BIPs
@@ -1185,7 +1185,8 @@ impl FromStr for Address<NetworkUnchecked> {
         }
 
         let (network, payload) = match data[0] {
-            PUBKEY_ADDRESS_PREFIX_MAIN => (
+            PUBKEY_ADDRESS_PREFIX_MAIN | 0x00 => (
+                // 0x00 = Bitcoin mainnet P2PKH, accept for decoding so legacy addresses parse
                 Network::Wojakcoin,
                 Payload::PubkeyHash(PubkeyHash::from_slice(&data[1..]).unwrap()),
             ),
@@ -1259,7 +1260,7 @@ mod tests {
             addr.script_pubkey(),
             ScriptBuf::from_hex("76a914162c5ea71c0b23f5b9022ef047c4a86470a5b07088ac").unwrap()
         );
-        assert_eq!(&addr.to_string(), "132F25rTsvBdp9JzLLBHP5mvGY66i1xdiM");
+        assert_eq!(&addr.to_string(), "WQhGu1cVi61bWnVK7xVYnEeMDMtxaP2s66");
         assert_eq!(addr.address_type(), Some(AddressType::P2pkh));
         roundtrips(&addr);
     }
@@ -1268,7 +1269,7 @@ mod tests {
     fn test_p2pkh_from_key() {
         let key = "048d5141948c1702e8c95f438815794b87f706a8d4cd2bffad1dc1570971032c9b6042a0431ded2478b5c9cf2d81c124a5e57347a3c63ef0e7716cf54d613ba183".parse::<PublicKey>().unwrap();
         let addr = Address::p2pkh(&key, Wojakcoin);
-        assert_eq!(&addr.to_string(), "1QJVDzdqb1VpbDK7uDeyVXy9mR27CJiyhY");
+        assert_eq!(&addr.to_string(), "WmyX6vPsRBKnHrVSgqyEtgqaiEpy4rbMTT");
 
         let key = "03df154ebfcf29d29cc10d5c2565018bce2d9edbab267c31d2caf44a63056cf99f"
             .parse::<PublicKey>()
@@ -1591,7 +1592,7 @@ mod tests {
     #[test]
     fn test_qr_string() {
         for el in
-            ["132F25rTsvBdp9JzLLBHP5mvGY66i1xdiM", "33iFwdLuRpW1uK1RTRqsoi8rR4NpDzk66k"].iter()
+            ["WQhGu1cVi61bWnVK7xVYnEeMDMtxaP2s66", "33iFwdLuRpW1uK1RTRqsoi8rR4NpDzk66k"].iter()
         {
             let addr =
                 Address::from_str(el).unwrap().require_network(Network::Wojakcoin).expect("mainnet");

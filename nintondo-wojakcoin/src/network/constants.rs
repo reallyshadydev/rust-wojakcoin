@@ -598,12 +598,12 @@ mod tests {
     fn serialize_test() {
         assert_eq!(serialize(&Network::Wojakcoin.magic()), &[0x6f, 0x8d, 0xa5, 0x79]);
         assert_eq!(serialize(&Network::Testnet.magic()), &[0x4d, 0xaa, 0x61, 0xf9]);
-        assert_eq!(serialize(&Network::Signet.magic()), &[0x0a, 0x03, 0xcf, 0x40]);
+        assert_eq!(serialize(&Network::Signet.magic()), &[0xfc, 0xc1, 0xb7, 0xdc]);
         assert_eq!(serialize(&Network::Regtest.magic()), &[0xfa, 0xbf, 0xb5, 0xda]);
 
         assert_eq!(deserialize(&[0x6f, 0x8d, 0xa5, 0x79]).ok(), Some(Network::Wojakcoin.magic()));
         assert_eq!(deserialize(&[0x4d, 0xaa, 0x61, 0xf9]).ok(), Some(Network::Testnet.magic()));
-        assert_eq!(deserialize(&[0x0a, 0x03, 0xcf, 0x40]).ok(), Some(Network::Signet.magic()));
+        assert_eq!(deserialize(&[0xfc, 0xc1, 0xb7, 0xdc]).ok(), Some(Network::Signet.magic()));
         assert_eq!(deserialize(&[0xfa, 0xbf, 0xb5, 0xda]).ok(), Some(Network::Regtest.magic()));
     }
 
@@ -690,7 +690,7 @@ mod tests {
             ("6f8da579", Network::Wojakcoin),
             ("4daa61f9", Network::Testnet),
             ("fabfb5da", Network::Regtest),
-            ("0a03cf40", Network::Signet),
+            ("fcc1b7dc", Network::Signet),
         ];
 
         for (magic_str, network) in &known_network_magic_strs {

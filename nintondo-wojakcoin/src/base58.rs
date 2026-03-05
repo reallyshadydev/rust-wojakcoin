@@ -309,9 +309,7 @@ mod tests {
                 .as_bytes(),
         );
         let exp =
-            "ZqC5ZdfpZRi7fjA8hbhX5pEE96MdH9hEaC1YouxscPtbJF16qVWksHWR4wwvx7MotFcs2ChbJqK8KJ9X\
-        wZznwWn1JFDhhTmGo9v6GjAVikzCsBWZehu7bm22xL8b5zBR5AsBygYRwbFJsNwNkjpyFuDKwmsUTKvkULCvucPJrN5\
-        QUdxpGakhqkZFL7RU4yT";
+            "mu3Lm2s9WZyceR9FcHJsShCGYK5SCv1HEcWGvHCQoA7eNKLNR3cgm2tSVBCshhjjs7yT5NLQvfa6QgrF3XQv7V5UmcSy6jo9ZAALX9JydquwFeR82P2vfYvj6cZFBAyvXk26rDRzQar892thMc4QRYRUHbYTv5TavUV5HAnSHPDkDaWuBeNFY1PL1keiH98wF6CSyfB3brUmMhEkkAEyEmHWm";
         assert_eq!(&res, exp);
 
         // Addresses
