@@ -1,0 +1,5 @@
+[workspace]
+members = ["nintondo-wojakcoin", "hashes", "internals"]
+
+[patch.crates-io.bitcoin_hashes]
+path = "hashes"
