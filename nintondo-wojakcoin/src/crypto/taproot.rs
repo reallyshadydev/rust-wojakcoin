@@ -10,6 +10,7 @@ use core::fmt;
 
 use bitcoin_internals::write_err;
 
+#[allow(unused_imports)]
 pub use secp256k1::{self, constants, KeyPair, Parity, Secp256k1, Verification, XOnlyPublicKey};
 
 use crate::prelude::*;

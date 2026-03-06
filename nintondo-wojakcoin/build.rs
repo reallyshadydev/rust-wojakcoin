@@ -1,4 +1,13 @@
 fn main() {
+    // Declare custom cfg names so we don't get unexpected_cfgs warnings
+    println!("cargo:rustc-check-cfg=cfg(rust_v_1_46)");
+    println!("cargo:rustc-check-cfg=cfg(rust_v_1_53)");
+    println!("cargo:rustc-check-cfg=cfg(rust_v_1_60)");
+    println!("cargo:rustc-check-cfg=cfg(bench)");
+    println!("cargo:rustc-check-cfg=cfg(fuzzing)");
+    println!("cargo:rustc-check-cfg=cfg(mutate)");
+    println!("cargo:rustc-check-cfg=cfg(kani)");
+
     let rustc = std::env::var_os("RUSTC").unwrap_or_else(|| "rustc".into());
     let output = std::process::Command::new(rustc)
         .arg("--version")

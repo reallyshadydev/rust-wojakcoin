@@ -1,4 +1,6 @@
 fn main() {
+    println!("cargo:rustc-check-cfg=cfg(rust_v_1_46)");
+
     let rustc = std::env::var_os("RUSTC");
     let rustc = rustc.as_ref().map(std::path::Path::new).unwrap_or_else(|| "rustc".as_ref());
     let output = std::process::Command::new(rustc)
